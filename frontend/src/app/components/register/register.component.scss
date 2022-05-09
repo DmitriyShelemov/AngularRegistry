@@ -1,0 +1,35 @@
+.step-form {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+
+    >div {
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        gap: 10px;
+
+        &.step-header {
+            width: 480px;
+
+            h1 {
+                padding-left: 160px;
+            }
+        }
+
+        >.step-label {
+            width: 150px;
+            text-align: right;
+
+            &.label-red {
+                color: red;
+            }
+        }        
+
+        >.step-field {
+            width: 320px;
+        }
+    }
+}

@@ -1,0 +1,85 @@
+<mat-stepper [linear]="true" orientation="vertical" #stepper>
+    <mat-step [stepControl]="firstFormGroup" class="step">
+        <form [formGroup]="firstFormGroup" class="step-form">
+            <div class="step-header">
+                <h1>Step 1</h1>
+            </div>
+            <div>
+                <label class="step-label">Login</label>
+                <mat-form-field class="step-field" appearance="fill">
+                    <input matInput type="email" formControlName="email" required>
+                    <mat-hint>Login must be a valid email</mat-hint>
+                </mat-form-field>
+            </div>
+            <div>
+                <label class="step-label">Password</label>
+                <mat-form-field class="step-field" appearance="fill">
+                    <input matInput type="password" formControlName="password" required>
+                    <mat-hint>Password must contain min 1 digit and min 1 uppercase letter</mat-hint>
+                </mat-form-field>
+            </div>
+            <div>
+                <label class="step-label">Confirm password</label>
+                <mat-form-field class="step-field" appearance="fill">
+                    <input matInput type="password" formControlName="confirmPassword" required>
+                    <mat-hint>Confirm password must be the same with password</mat-hint>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-checkbox formControlName="agreed" required>Agree to work for food</mat-checkbox>
+            </div>
+            <div>
+                <button mat-raised-button color="primary" appearance="fill" [disabled]="!firstFormGroup.valid" matStepperNext>Go to step 2</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup" class="step-form">
+            <div>
+                <h1>Step 2</h1>
+            </div>
+            <div>
+                <label class="step-label">Country</label>
+                <mat-form-field class="step-field" appearance="fill">
+                    <mat-label>Select country</mat-label>
+                    <mat-select formControlName="country" [(value)]="selectedCountryValue" (selectionChange)="countryChanged($event)">
+                        <mat-option *ngFor="let country of countries | async" [value]="country.value">
+                            {{country.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint>Country is a required field</mat-hint>
+                </mat-form-field>
+            </div>
+            <div>
+                <label class="step-label">Province</label>
+                <mat-form-field class="step-field" appearance="fill">
+                    <mat-label>Please select country first</mat-label>
+                    <mat-select formControlName="province">
+                        <mat-option *ngFor="let province of provinces | async" [value]="province.value">
+                            {{province.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint>Province is a required field</mat-hint>
+                </mat-form-field>
+            </div>
+            <div *ngIf="error">
+                <label class="step-label label-red">Error!</label>
+                <mat-hint class="step-field">{{error}}</mat-hint>
+            </div>
+            <div>
+                <button mat-raised-button color="primary" [disabled]="!secondFormGroup.valid" (click)="submit()">Save</button>
+            </div>
+            <div>
+                <mat-hint *ngIf="!secondFormGroup.valid">Complete step to enable button</mat-hint>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [completed]="completed">
+        <div class="step-form">            
+            <div>
+                <h1>Success!</h1>
+            </div>
+            <div>You are now registered.</div>
+        </div>
+    </mat-step>
+</mat-stepper>
